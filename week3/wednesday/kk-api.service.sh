@@ -1,17 +1,18 @@
 # /etc/systemd/system/kk-api.service
 
 [Unit]
-Description=KijaniKiosk Payment Service
+Description=KijaniKiosk API Service
 Documentation=https://github.com/kijanikiosk/api/blob/main/README.md
 After=network-online.target
 Wants=network-online.target
+# TODO: Add the ordering dependency so this service starts after kk-payments.service
 
 [Service]
 Type=simple
-User=kk-payment
-Group=kk-payment
-WorkingDirectory=/opt/kijanikiosk/payment
-ExecStart=/usr/bin/node /opt/kijanikiosk/payment/server.js
+User=kk-api
+Group=kk-api
+WorkingDirectory=/opt/kijanikiosk/api
+ExecStart=/usr/bin/node /opt/kijanikiosk/api/server.js
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=5s
@@ -22,9 +23,7 @@ TimeoutStopSec=30s
 # Environment
 # TODO: Add two EnvironmentFile lines pointing to db.env and api.env under /opt/kijanikiosk/config/
 Environment="NODE_ENV=production"
-Environment="PORT=3001"
-EnvironmentFile=-/opt/kijanikiosk/config/db.env
-EnvironmentFile=-/opt/kijanikiosk/config/payments-api.env
+Environment="PORT=3000"
 
 # Logging
 StandardOutput=journal

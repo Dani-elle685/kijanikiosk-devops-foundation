@@ -26,7 +26,7 @@ produced the following result:
 
 **Initial score:** 5.8 (MEDIUM)
 
-This score indicated that although some protections were already in place, the service still had broad access to kernel interfaces, devices, namespaces, and unrestricted system calls.
+This score indicated that although some protections were already in place, further procedures were supposed to be initiated for hardening
 
 ---
 
@@ -38,8 +38,6 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** The payment service does not interact with hardware devices.
 
-**Result:** Exposure score decreased.
-
 ---
 
 ### Directive 2: ProtectKernelModules=true
@@ -47,8 +45,6 @@ This score indicated that although some protections were already in place, the s
 **Purpose:** Prevents reading or loading kernel modules.
 
 **Reason for selection:** The application has no legitimate need to manage kernel modules.
-
-**Result:** Exposure score decreased.
 
 ---
 
@@ -58,8 +54,6 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** The payment service should not modify operating system settings.
 
-**Result:** Exposure score decreased.
-
 ---
 
 ### Directive 4: ProtectControlGroups=true
@@ -67,8 +61,6 @@ This score indicated that although some protections were already in place, the s
 **Purpose:** Prevents modification of control group hierarchies.
 
 **Reason for selection:** The service does not manage other processes.
-
-**Result:** Exposure score decreased.
 
 ---
 
@@ -78,8 +70,6 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** The service should not be able to create files with elevated privileges.
 
-**Result:** Exposure score decreased.
-
 ---
 
 ### Directive 6: ProtectProc=invisible
@@ -87,8 +77,6 @@ This score indicated that although some protections were already in place, the s
 **Purpose:** Restricts visibility of other processes in `/proc`.
 
 **Reason for selection:** The payment service only requires access to its own process information.
-
-**Result:** Exposure score decreased.
 
 ---
 
@@ -98,8 +86,6 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** Reduces information disclosure.
 
-**Result:** Exposure score decreased.
-
 ---
 
 ### Directive 8: LockPersonality=true
@@ -107,8 +93,6 @@ This score indicated that although some protections were already in place, the s
 **Purpose:** Prevents changes to execution domain personality.
 
 **Reason for selection:** The service has no legitimate reason to alter ABI behaviour.
-
-**Result:** Exposure score decreased.
 
 ---
 
@@ -118,8 +102,6 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** The payment service does not perform real-time operations.
 
-**Result:** Exposure score decreased.
-
 ---
 
 ### Directive 10: SystemCallArchitectures=native
@@ -127,8 +109,6 @@ This score indicated that although some protections were already in place, the s
 **Purpose:** Restricts execution to native system call architectures.
 
 **Reason for selection:** Prevents use of alternate ABIs.
-
-**Result:** Exposure score decreased.
 
 ---
 
@@ -138,8 +118,6 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** The service only requires normal network communication.
 
-**Result:** Exposure score decreased.
-
 ---
 
 ### Directive 12: UMask=0027
@@ -148,8 +126,7 @@ This score indicated that although some protections were already in place, the s
 
 **Reason for selection:** Payment-related logs and temporary files should have restricted access.
 
-## **Result:** Exposure score decreased.
-
+##
 ## 3. Directives Investigated but Not Applied
 
 ### PrivateNetwork=true
@@ -180,20 +157,49 @@ Node.js relies on the V8 JavaScript engine, which may use JIT compilation requir
 
 After applying the selected hardening directives and testing service functionality:
 
-**Final score:** ________ (below 2.5)
-
-The payment service continued to operate correctly while significantly reducing its attack surface.
+**Final score:** 1.1 (below 2.5)
 
 ---
 
-## 5. Final kk-payments.service Unit File
+## 5. Final kk-payments.service Unit File hardening includes:
 
-Include the complete final version of the service unit file submitted for deployment.
+        NoNewPrivileges=true
+        PrivateTmp=true
+        ProtectSystem=strict
+        ProtectHome=true
+        CapabilityBoundingSet=
 
-*(Paste the full contents of the hardened unit file here.)*
+        PrivateDevices=true
+        PrivateUsers=true
+        PrivateMounts=true
+
+        ProtectClock=true
+        ProtectHostname=true
+        ProtectKernelLogs=true
+        ProtectKernelModules=true
+        ProtectKernelTunables=true
+        ProtectControlGroups=true
+
+        ProtectProc=invisible
+        ProcSubset=pid
+
+        RestrictSUIDSGID=true
+        RestrictRealtime=true
+        LockPersonality=true
+        SystemCallArchitectures=native
+
+        RestrictNamespaces=true
+        RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+        SystemCallFilter=@system-service
+        SystemCallFilter=~@clock @cpu-emulation @debug @module \
+                        @mount @obsolete @privileged \
+                        @raw-io @reboot @resources @swap
+
+        UMask=0027
+        RemoveIPC=true
 
 ---
 
-## Conclusion
 
-The hardening exercise demonstrated that reducing a service's exposure score requires balancing security improvements with operational requirements. Rather than applying every recommendation blindly, each directive was evaluated to determine whether it was appropriate for the workload and whether it preserved the functionality of the payment service.
+
