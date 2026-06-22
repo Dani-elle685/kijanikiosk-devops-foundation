@@ -1,0 +1,84 @@
+daniel@daniel-HP-ProBook-450-G8-Notebook-PC:~/Documents/KijaniKiosk/IP$ sudo bash kijanikiosk-provision.sh
+[2026-06-21T21:47:37] INFO  Starting KijaniKiosk provisioning...
+[2026-06-21T21:47:37] INFO  === Phase 1: Package Installation ===
+Hit:1 http://ke.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://ke.archive.ubuntu.com/ubuntu noble-updates InRelease                     
+Hit:3 http://ke.archive.ubuntu.com/ubuntu noble-backports InRelease                   
+Hit:4 https://deb.nodesource.com/node_20.x nodistro InRelease                         
+Hit:5 https://dl.google.com/linux/chrome-stable/deb stable InRelease                  
+Hit:6 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists... Done                 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (8.5.0-2ubuntu10.9).
+gnupg is already the newest version (2.4.4-2ubuntu17.4).
+acl is already the newest version (2.3.2-1build1.1).
+ufw is already the newest version (0.36.2-6).
+logrotate is already the newest version (3.21.0-2build1).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+[2026-06-21T21:47:40] OK    Installed nginx 1.24.0 (Ubuntu)     and Node v18.19.1
+[2026-06-21T21:47:40] INFO  === Phase 2: Service Accounts ===
+[2026-06-21T21:47:40] OK    Provisioned kijanikiosk group and service accounts
+[2026-06-21T21:47:40] INFO  === Phase 3: Directory Structure ===
+[2026-06-21T21:47:40] OK    Provisioned directory ownership, permissions, and ACLs
+[2026-06-21T21:47:40] INFO  === Phase 4: systemd Unit Files ===
+[2026-06-21T21:47:41] OK    Provisioned kk-api.service Successfully.
+[2026-06-21T21:47:41] INFO  === Phase 5: Firewall Configuration ===
+Backing up 'user.rules' to '/etc/ufw/user.rules.20260621_214742'
+Backing up 'before.rules' to '/etc/ufw/before.rules.20260621_214742'
+Backing up 'after.rules' to '/etc/ufw/after.rules.20260621_214742'
+Backing up 'user6.rules' to '/etc/ufw/user6.rules.20260621_214742'
+Backing up 'before6.rules' to '/etc/ufw/before6.rules.20260621_214742'
+Backing up 'after6.rules' to '/etc/ufw/after6.rules.20260621_214742'
+
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+Rules updated
+Rules updated (v6)
+Rules updated
+Rules updated (v6)
+Firewall is active and enabled on system startup
+[2026-06-21T21:47:43] OK    UFW enabled successfully
+[2026-06-21T21:47:43] INFO  Current firewall rules:
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                  
+80/tcp                     ALLOW IN    Anywhere                  
+22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+[2026-06-21T21:47:43] OK    Firewall configuration completed
+[2026-06-21T21:47:43] INFO  === Phase 6: Post-Provisioning Verification ===
+[2026-06-21T21:47:43] OK    Account exists: kk-api
+[2026-06-21T21:47:43] OK    Account exists: kk-payments
+[2026-06-21T21:47:43] OK    Account exists: kk-logs
+[2026-06-21T21:47:43] OK    Directory exists: /opt/kijanikiosk/api
+[2026-06-21T21:47:43] OK    Directory exists: /opt/kijanikiosk/payments
+[2026-06-21T21:47:43] OK    Directory exists: /opt/kijanikiosk/logs
+[2026-06-21T21:47:43] OK    Directory exists: /opt/kijanikiosk/config
+[2026-06-21T21:47:43] OK    Directory exists: /opt/kijanikiosk/scripts
+[2026-06-21T21:47:43] OK    Directory exists: /opt/kijanikiosk/shared/logs
+[2026-06-21T21:47:43] OK    No SUID files found under /opt/kijanikiosk
+[2026-06-21T21:47:43] OK    nginx package hold active
+[2026-06-21T21:47:43] OK    nodejs package hold active
+[2026-06-21T21:47:43] OK    kk-api.service enabled
+[2026-06-21T21:47:43] OK    Verification completed successfully
+[2026-06-21T21:47:43] INFO  === Phase 7: Journal Persistence and Log Rotation ===
+[2026-06-21T21:47:43] INFO  Reload unsupported; restarting systemd-journald
+[2026-06-21T21:47:43] OK    Persistent journal configured (500MB cap)
+[2026-06-21T21:47:43] OK    logrotate configuration validated
+[2026-06-21T21:47:43] OK    Logging configuration completed
+[2026-06-21T21:47:43] INFO  === Phase 8: Monitoring Health Checks ===
+[2026-06-21T21:47:43] OK    Health report written to /opt/kijanikiosk/health/last-provision.json
+[2026-06-21T21:47:43] INFO  kk-api port 3000 not listening (expected if not deployed)
+[2026-06-21T21:47:43] OK    kk-payments port 3001 reachable
+[2026-06-21T21:47:43] INFO  kk-logs port 3002 not listening (expected if not deployed)
+[2026-06-21T21:47:43] OK    Provisioning complete. Server is in known state.
