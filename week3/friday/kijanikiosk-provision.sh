@@ -188,12 +188,37 @@ provision_services() {
         SyslogIdentifier=kk-api
 
         # Hardening
-
         NoNewPrivileges=true
         PrivateTmp=true
         ProtectSystem=strict
         ProtectHome=true
+
         CapabilityBoundingSet=
+        AmbientCapabilities=
+
+        PrivateDevices=true
+
+        ProtectClock=true
+        ProtectHostname=true
+        ProtectKernelLogs=true
+        ProtectKernelModules=true
+        ProtectKernelTunables=true
+        ProtectControlGroups=true
+
+        ProtectProc=invisible
+        ProcSubset=pid
+
+        RestrictNamespaces=true
+        RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+        RestrictSUIDSGID=true
+        RestrictRealtime=true
+        LockPersonality=true
+
+        SystemCallFilter=@system-service
+        SystemCallArchitectures=native
+
+        RemoveIPC=true
 
         [Install]
         WantedBy=multi-user.target
@@ -265,7 +290,6 @@ EOF
                         @mount @obsolete @privileged \
                         @raw-io @reboot @resources @swap
 
-        UMask=0027
         RemoveIPC=true
 
 
@@ -307,7 +331,33 @@ EOF
         PrivateTmp=true
         ProtectSystem=strict
         ProtectHome=true
+
         CapabilityBoundingSet=
+        AmbientCapabilities=
+
+        PrivateDevices=true
+
+        ProtectClock=true
+        ProtectHostname=true
+        ProtectKernelLogs=true
+        ProtectKernelModules=true
+        ProtectKernelTunables=true
+        ProtectControlGroups=true
+
+        ProtectProc=invisible
+        ProcSubset=pid
+
+        RestrictNamespaces=true
+        RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+        RestrictSUIDSGID=true
+        RestrictRealtime=true
+        LockPersonality=true
+
+        SystemCallFilter=@system-service
+        SystemCallArchitectures=native
+
+        RemoveIPC=true
 
         [Install]
         WantedBy=multi-user.target
