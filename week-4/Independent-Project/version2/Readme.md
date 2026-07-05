@@ -1,4 +1,4 @@
-## Pipeline Validation Stages
+## Pipeline Validation Stages (pipeline.sh)
 
 The deployment pipeline performs a series of validation and deployment steps to ensure both the infrastructure and configuration are correct before provisioning and configuring the servers.
 
