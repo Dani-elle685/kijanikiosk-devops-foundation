@@ -1,0 +1,38 @@
+---
+- name: Create KijaniKiosk group
+  ansible.builtin.group:
+    name: "{{ service_group }}"
+    system: true
+    state: present
+
+- name: Create service account
+  ansible.builtin.user:
+    name: "{{ service_name }}"
+    group: "{{ service_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+    state: present
+
+- name: Create application directory tree
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - path: "{{ base_dir }}"
+      owner: root
+      group: root
+      mode: "0755"
+
+    - path: "{{ base_dir }}/{{ service_name }}"
+      owner: "{{ service_name }}"
+      group: "{{ service_group }}"
+      mode: "0755"
+
+    - path: "{{ log_dir }}"
+      owner: "{{ service_name }}"
+      group: "{{ service_group }}"
+      mode: "0755"

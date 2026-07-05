@@ -1,0 +1,10 @@
+- name: Configure KijaniKiosk servers
+  hosts: kijanikiosk
+  become: true
+
+  roles:
+    - common
+    - users
+    - systemd
+    - firewall
+    - logging

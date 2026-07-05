@@ -1,0 +1,17 @@
+[Unit]
+Description={{ service_name }}
+After=network.target
+
+[Service]
+Type=simple
+User={{ service_name }}
+Group={{ service_group }}
+WorkingDirectory={{ base_dir }}/{{ service_name }}
+
+ExecStart=/usr/bin/python3 -m http.server {{ service_port }}
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+service_group: kijanikiosk
+
+base_dir: /opt/kijanikiosk
+
+log_dir: /var/log/kijanikiosk
+

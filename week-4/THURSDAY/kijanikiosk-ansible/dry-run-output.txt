@@ -1,0 +1,83 @@
+
+PLAY [Configure KijaniKiosk servers] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [payments-staging]
+ok: [logs-staging]
+ok: [api-staging]
+
+TASK [Update apt cache] ********************************************************
+changed: [payments-staging]
+changed: [logs-staging]
+changed: [api-staging]
+
+TASK [Install required packages] ***********************************************
+changed: [payments-staging]
+changed: [logs-staging]
+changed: [api-staging]
+
+TASK [Create kijanikiosk system group] *****************************************
+changed: [payments-staging]
+changed: [logs-staging]
+changed: [api-staging]
+
+TASK [Create service account] **************************************************
+changed: [payments-staging]
+changed: [api-staging]
+changed: [logs-staging]
+
+TASK [Create application directory tree] ***************************************
+[WARNING]: failed to look up user kk-payments. Create user up to this point in real play
+[WARNING]: failed to look up group kijanikiosk. Create group up to this point in real play
+[WARNING]: failed to look up user kk-api. Create user up to this point in real play
+[WARNING]: failed to look up user kk-logs. Create user up to this point in real play
+changed: [payments-staging] => (item={'path': '/opt/kijanikiosk', 'owner': 'root', 'group': 'root', 'mode': '0755'})
+changed: [api-staging] => (item={'path': '/opt/kijanikiosk', 'owner': 'root', 'group': 'root', 'mode': '0755'})
+changed: [logs-staging] => (item={'path': '/opt/kijanikiosk', 'owner': 'root', 'group': 'root', 'mode': '0755'})
+changed: [payments-staging] => (item={'path': '/opt/kijanikiosk/kk-payments', 'owner': 'kk-payments', 'group': 'kijanikiosk', 'mode': '0755'})
+changed: [api-staging] => (item={'path': '/opt/kijanikiosk/kk-api', 'owner': 'kk-api', 'group': 'kijanikiosk', 'mode': '0755'})
+changed: [logs-staging] => (item={'path': '/opt/kijanikiosk/kk-logs', 'owner': 'kk-logs', 'group': 'kijanikiosk', 'mode': '0755'})
+changed: [payments-staging] => (item={'path': '/var/log/kijanikiosk', 'owner': 'kk-payments', 'group': 'kijanikiosk', 'mode': '0755'})
+changed: [logs-staging] => (item={'path': '/var/log/kijanikiosk', 'owner': 'kk-logs', 'group': 'kijanikiosk', 'mode': '0755'})
+changed: [api-staging] => (item={'path': '/var/log/kijanikiosk', 'owner': 'kk-api', 'group': 'kijanikiosk', 'mode': '0755'})
+
+TASK [Deploy systemd service] **************************************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [Enable and start service] ************************************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [Enable UFW with default deny incoming] ***********************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [Allow SSH] ***************************************************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [Allow application port] **************************************************
+ok: [api-staging]
+ok: [logs-staging]
+ok: [payments-staging]
+
+TASK [Create persistent journal directory] *************************************
+ok: [logs-staging]
+ok: [payments-staging]
+ok: [api-staging]
+
+TASK [Deploy logrotate configuration] ******************************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+PLAY RECAP *********************************************************************
+api-staging                : ok=13   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+logs-staging               : ok=13   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+payments-staging           : ok=13   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

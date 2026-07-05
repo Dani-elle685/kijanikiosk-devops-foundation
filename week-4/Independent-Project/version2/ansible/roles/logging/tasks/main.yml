@@ -1,0 +1,15 @@
+- name: Create persistent journal directory
+  ansible.builtin.file:
+    path: /var/log/journal
+    state: directory
+    mode: "0755"
+  notify:
+    - Restart journald
+
+- name: Deploy logrotate configuration
+  ansible.builtin.template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/kijanikiosk
+    owner: root
+    group: root
+    mode: "0644"

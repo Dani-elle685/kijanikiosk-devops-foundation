@@ -1,0 +1,33 @@
+[Unit]
+Description={{ service_name }}
+After=network.target
+
+[Service]
+Type=simple
+
+User={{ service_name }}
+Group={{ service_group }}
+
+WorkingDirectory={{ base_dir }}/{{ service_name }}
+
+ExecStart=/usr/bin/sleep infinity
+
+Restart=always
+RestartSec=5
+
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+NoNewPrivileges=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+
+ReadWritePaths={{ base_dir }} {{ log_dir }}
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,184 @@
+daniel@daniel-Lenovo-ThinkBook-14-IIL:~/Moringa/week-4/Independent-Project/version2$ ./pipeline.sh | tee pipeline-run2.log
+======================================
+KijaniKiosk Infrastructure Pipeline
+======================================
+
+Stage 1: Checking Terraform formatting...
+Terraform formatting OK
+
+Stage 2: Initializing Terraform...
+Initializing modules...
+Initializing provider plugins found in the configuration...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v6.53.0
+
+Initializing the backend...
+
+Initializing provider plugins found in the state...
+- Reusing previous version of hashicorp/aws
+- Using previously-installed hashicorp/aws v6.53.0
+
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+Validating Terraform configuration...
+Success! The configuration is valid.
+
+Terraform validation OK
+
+Stage 3: Terraform Plan
+data.aws_ami.ubuntu: Reading...
+module.app_servers["api"].aws_security_group.app: Refreshing state... [id=sg-098241611d5e46a6a]
+module.app_servers["payments"].aws_security_group.app: Refreshing state... [id=sg-0db0e1100fd570c15]
+module.app_servers["logs"].aws_security_group.app: Refreshing state... [id=sg-0830624e1628440e3]
+data.aws_ami.ubuntu: Read complete after 2s [id=ami-0a02a779008fa3b99]
+module.app_servers["payments"].aws_instance.this: Refreshing state... [id=i-09a74593c513a52e4]
+module.app_servers["logs"].aws_instance.this: Refreshing state... [id=i-0c3d88ebddf565918]
+module.app_servers["api"].aws_instance.this: Refreshing state... [id=i-045a049029c66c3ce]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+
+Stage 4: Terraform Apply
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+api_server_ip = "184.72.185.98"
+logs_server_ip = "54.166.134.161"
+payments_server_ip = "34.207.231.179"
+ssh_commands = {
+  "api" = "ssh -i ~/.ssh/id_ed25519 ubuntu@184.72.185.98"
+  "logs" = "ssh -i ~/.ssh/id_ed25519 ubuntu@54.166.134.161"
+  "payments" = "ssh -i ~/.ssh/id_ed25519 ubuntu@34.207.231.179"
+}
+
+Stage 5: Generating Ansible inventory...
+Inventory generated.
+
+Stage 6: Validating inventory...
+@all:
+  |--@ungrouped:
+  |--@kijanikiosk:
+  |  |--api-staging
+  |  |--payments-staging
+  |  |--logs-staging
+
+Inventory variables
+Inventory OK
+
+Stage 7: Validating playbook syntax...
+
+playbook: ./ansible/kijanikiosk.yml
+Playbook syntax OK
+
+Stage 8: Testing SSH connectivity...
+api-staging | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+payments-staging | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+logs-staging | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+All hosts reachable
+
+Stage 9: Configuring Servers
+
+PLAY [Configure KijaniKiosk servers] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [logs-staging]
+ok: [api-staging]
+ok: [payments-staging]
+
+TASK [common : Update apt cache] ***********************************************
+ok: [payments-staging]
+ok: [logs-staging]
+ok: [api-staging]
+
+TASK [common : Install required packages] **************************************
+ok: [logs-staging]
+ok: [payments-staging]
+ok: [api-staging]
+
+TASK [users : Create KijaniKiosk group] ****************************************
+ok: [api-staging]
+ok: [payments-staging]
+ok: [logs-staging]
+
+TASK [users : Create service account] ******************************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [users : Create application directory tree] *******************************
+ok: [payments-staging] => (item={'path': '/opt/kijanikiosk', 'owner': 'root', 'group': 'root', 'mode': '0755'})
+ok: [api-staging] => (item={'path': '/opt/kijanikiosk', 'owner': 'root', 'group': 'root', 'mode': '0755'})
+ok: [logs-staging] => (item={'path': '/opt/kijanikiosk', 'owner': 'root', 'group': 'root', 'mode': '0755'})
+ok: [payments-staging] => (item={'path': '/opt/kijanikiosk/kk-payments', 'owner': 'kk-payments', 'group': 'kijanikiosk', 'mode': '0755'})
+ok: [api-staging] => (item={'path': '/opt/kijanikiosk/kk-api', 'owner': 'kk-api', 'group': 'kijanikiosk', 'mode': '0755'})
+ok: [logs-staging] => (item={'path': '/opt/kijanikiosk/kk-logs', 'owner': 'kk-logs', 'group': 'kijanikiosk', 'mode': '0755'})
+ok: [payments-staging] => (item={'path': '/var/log/kijanikiosk', 'owner': 'kk-payments', 'group': 'kijanikiosk', 'mode': '0755'})
+ok: [logs-staging] => (item={'path': '/var/log/kijanikiosk', 'owner': 'kk-logs', 'group': 'kijanikiosk', 'mode': '0755'})
+ok: [api-staging] => (item={'path': '/var/log/kijanikiosk', 'owner': 'kk-api', 'group': 'kijanikiosk', 'mode': '0755'})
+
+TASK [systemd : Deploy systemd service] ****************************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [systemd : Enable and start service] **************************************
+ok: [payments-staging]
+ok: [logs-staging]
+ok: [api-staging]
+
+TASK [firewall : Set default deny incoming] ************************************
+ok: [logs-staging]
+ok: [payments-staging]
+ok: [api-staging]
+
+TASK [firewall : Allow SSH] ****************************************************
+ok: [api-staging]
+ok: [payments-staging]
+ok: [logs-staging]
+
+TASK [firewall : Allow application port from localhost] ************************
+ok: [payments-staging]
+ok: [api-staging]
+ok: [logs-staging]
+
+TASK [logging : Create persistent journal directory] ***************************
+ok: [logs-staging]
+ok: [api-staging]
+ok: [payments-staging]
+
+TASK [logging : Deploy logrotate configuration] ********************************
+ok: [payments-staging]
+ok: [logs-staging]
+ok: [api-staging]
+
+PLAY RECAP *********************************************************************
+api-staging                : ok=13   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+logs-staging               : ok=13   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+payments-staging           : ok=13   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+======================================
+Pipeline completed successfully.
+======================================

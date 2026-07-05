@@ -1,0 +1,576 @@
+daniel@daniel-Lenovo-ThinkBook-14-IIL:~/Moringa/kijanikiosk-devops-foundation/week-4/Independent-Project/version2/terraform$ terraform destroy
+data.aws_ami.ubuntu: Reading...
+module.app_servers["api"].aws_security_group.app: Refreshing state... [id=sg-098241611d5e46a6a]
+module.app_servers["logs"].aws_security_group.app: Refreshing state... [id=sg-0830624e1628440e3]
+module.app_servers["payments"].aws_security_group.app: Refreshing state... [id=sg-0db0e1100fd570c15]
+data.aws_ami.ubuntu: Read complete after 2s [id=ami-0a02a779008fa3b99]
+module.app_servers["payments"].aws_instance.this: Refreshing state... [id=i-09a74593c513a52e4]
+module.app_servers["logs"].aws_instance.this: Refreshing state... [id=i-0c3d88ebddf565918]
+module.app_servers["api"].aws_instance.this: Refreshing state... [id=i-045a049029c66c3ce]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # module.app_servers["api"].aws_instance.this will be destroyed
+  - resource "aws_instance" "this" {
+      - ami                                  = "ami-0a02a779008fa3b99" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:244762345243:instance/i-045a049029c66c3ce" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-1d" -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - force_destroy                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-045a049029c66c3ce" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t3.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "daniel-ed25519" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-07001cdcd0340666a" -> null
+      - private_dns                          = "ip-172-31-38-53.ec2.internal" -> null
+      - private_ip                           = "172.31.38.53" -> null
+      - public_dns                           = "ec2-184-72-185-98.compute-1.amazonaws.com" -> null
+      - public_ip                            = "184.72.185.98" -> null
+      - region                               = "us-east-1" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "api-sg5bf47f9cc7deb2c08a20256089",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-0c4bc623b8d1f5214" -> null
+      - tags                                 = {
+          - "Environment" = "staging"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "kijanikiosk-api"
+          - "Service"     = "api"
+        } -> null
+      - tags_all                             = {
+          - "Environment" = "staging"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "kijanikiosk-api"
+          - "Service"     = "api"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-098241611d5e46a6a",
+        ] -> null
+        # (8 unchanged attributes hidden)
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count            = 1 -> null
+          - threads_per_core      = 2 -> null
+            # (2 unchanged attributes hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - primary_network_interface {
+          - delete_on_termination = true -> null
+          - network_interface_id  = "eni-07001cdcd0340666a" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - tags_all              = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-0e94401aebdbe20dd" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.app_servers["api"].aws_security_group.app will be destroyed
+  - resource "aws_security_group" "app" {
+      - arn                    = "arn:aws:ec2:us-east-1:244762345243:security-group/sg-098241611d5e46a6a" -> null
+      - description            = "Managed by Terraform" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-098241611d5e46a6a" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTP"
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "SSH"
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+        ] -> null
+      - name                   = "api-sg5bf47f9cc7deb2c08a20256089" -> null
+      - name_prefix            = "api-sg" -> null
+      - owner_id               = "244762345243" -> null
+      - region                 = "us-east-1" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name" = "api-sg"
+        } -> null
+      - tags_all               = {
+          - "Name" = "api-sg"
+        } -> null
+      - vpc_id                 = "vpc-01c0569dec3c0801c" -> null
+    }
+
+  # module.app_servers["logs"].aws_instance.this will be destroyed
+  - resource "aws_instance" "this" {
+      - ami                                  = "ami-0a02a779008fa3b99" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:244762345243:instance/i-0c3d88ebddf565918" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-1d" -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - force_destroy                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-0c3d88ebddf565918" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t3.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "daniel-ed25519" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-05301a6912d580b7e" -> null
+      - private_dns                          = "ip-172-31-39-197.ec2.internal" -> null
+      - private_ip                           = "172.31.39.197" -> null
+      - public_dns                           = "ec2-54-166-134-161.compute-1.amazonaws.com" -> null
+      - public_ip                            = "54.166.134.161" -> null
+      - region                               = "us-east-1" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "logs-sg4a4c130d4d99fa864a6d61640b",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-0c4bc623b8d1f5214" -> null
+      - tags                                 = {
+          - "Environment" = "staging"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "kijanikiosk-logs"
+          - "Service"     = "logs"
+        } -> null
+      - tags_all                             = {
+          - "Environment" = "staging"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "kijanikiosk-logs"
+          - "Service"     = "logs"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-0830624e1628440e3",
+        ] -> null
+        # (8 unchanged attributes hidden)
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count            = 1 -> null
+          - threads_per_core      = 2 -> null
+            # (2 unchanged attributes hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - primary_network_interface {
+          - delete_on_termination = true -> null
+          - network_interface_id  = "eni-05301a6912d580b7e" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - tags_all              = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-0bac98c5283fc8d6b" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.app_servers["logs"].aws_security_group.app will be destroyed
+  - resource "aws_security_group" "app" {
+      - arn                    = "arn:aws:ec2:us-east-1:244762345243:security-group/sg-0830624e1628440e3" -> null
+      - description            = "Managed by Terraform" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-0830624e1628440e3" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTP"
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "SSH"
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+        ] -> null
+      - name                   = "logs-sg4a4c130d4d99fa864a6d61640b" -> null
+      - name_prefix            = "logs-sg" -> null
+      - owner_id               = "244762345243" -> null
+      - region                 = "us-east-1" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name" = "logs-sg"
+        } -> null
+      - tags_all               = {
+          - "Name" = "logs-sg"
+        } -> null
+      - vpc_id                 = "vpc-01c0569dec3c0801c" -> null
+    }
+
+  # module.app_servers["payments"].aws_instance.this will be destroyed
+  - resource "aws_instance" "this" {
+      - ami                                  = "ami-0a02a779008fa3b99" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:244762345243:instance/i-09a74593c513a52e4" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-1d" -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - force_destroy                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-09a74593c513a52e4" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t3.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "daniel-ed25519" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-09d06045efadcdcdc" -> null
+      - private_dns                          = "ip-172-31-46-102.ec2.internal" -> null
+      - private_ip                           = "172.31.46.102" -> null
+      - public_dns                           = "ec2-34-207-231-179.compute-1.amazonaws.com" -> null
+      - public_ip                            = "34.207.231.179" -> null
+      - region                               = "us-east-1" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "payments-sg7623ca49aeba43f6e9d125e162",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-0c4bc623b8d1f5214" -> null
+      - tags                                 = {
+          - "Environment" = "staging"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "kijanikiosk-payments"
+          - "Service"     = "payments"
+        } -> null
+      - tags_all                             = {
+          - "Environment" = "staging"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "kijanikiosk-payments"
+          - "Service"     = "payments"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-0db0e1100fd570c15",
+        ] -> null
+        # (8 unchanged attributes hidden)
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count            = 1 -> null
+          - threads_per_core      = 2 -> null
+            # (2 unchanged attributes hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - primary_network_interface {
+          - delete_on_termination = true -> null
+          - network_interface_id  = "eni-09d06045efadcdcdc" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - tags_all              = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-07a2bea5fcca938d5" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.app_servers["payments"].aws_security_group.app will be destroyed
+  - resource "aws_security_group" "app" {
+      - arn                    = "arn:aws:ec2:us-east-1:244762345243:security-group/sg-0db0e1100fd570c15" -> null
+      - description            = "Managed by Terraform" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-0db0e1100fd570c15" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "HTTP"
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "SSH"
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+        ] -> null
+      - name                   = "payments-sg7623ca49aeba43f6e9d125e162" -> null
+      - name_prefix            = "payments-sg" -> null
+      - owner_id               = "244762345243" -> null
+      - region                 = "us-east-1" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name" = "payments-sg"
+        } -> null
+      - tags_all               = {
+          - "Name" = "payments-sg"
+        } -> null
+      - vpc_id                 = "vpc-01c0569dec3c0801c" -> null
+    }
+
+Plan: 0 to add, 0 to change, 6 to destroy.
+
+Changes to Outputs:
+  - api_server_ip      = "184.72.185.98" -> null
+  - logs_server_ip     = "54.166.134.161" -> null
+  - payments_server_ip = "34.207.231.179" -> null
+  - ssh_commands       = {
+      - api      = "ssh -i ~/.ssh/id_ed25519 ubuntu@184.72.185.98"
+      - logs     = "ssh -i ~/.ssh/id_ed25519 ubuntu@54.166.134.161"
+      - payments = "ssh -i ~/.ssh/id_ed25519 ubuntu@34.207.231.179"
+    } -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+module.app_servers["logs"].aws_instance.this: Destroying... [id=i-0c3d88ebddf565918]
+module.app_servers["api"].aws_instance.this: Destroying... [id=i-045a049029c66c3ce]
+module.app_servers["payments"].aws_instance.this: Destroying... [id=i-09a74593c513a52e4]
+module.app_servers["logs"].aws_instance.this: Still destroying... [id=i-0c3d88ebddf565918, 00m10s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 00m10s elapsed]
+module.app_servers["payments"].aws_instance.this: Still destroying... [id=i-09a74593c513a52e4, 00m10s elapsed]
+module.app_servers["payments"].aws_instance.this: Still destroying... [id=i-09a74593c513a52e4, 00m20s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 00m20s elapsed]
+module.app_servers["logs"].aws_instance.this: Still destroying... [id=i-0c3d88ebddf565918, 00m20s elapsed]
+module.app_servers["logs"].aws_instance.this: Still destroying... [id=i-0c3d88ebddf565918, 00m30s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 00m30s elapsed]
+module.app_servers["payments"].aws_instance.this: Still destroying... [id=i-09a74593c513a52e4, 00m30s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 00m40s elapsed]
+module.app_servers["payments"].aws_instance.this: Still destroying... [id=i-09a74593c513a52e4, 00m40s elapsed]
+module.app_servers["logs"].aws_instance.this: Still destroying... [id=i-0c3d88ebddf565918, 00m40s elapsed]
+module.app_servers["payments"].aws_instance.this: Destruction complete after 44s
+module.app_servers["payments"].aws_security_group.app: Destroying... [id=sg-0db0e1100fd570c15]
+module.app_servers["payments"].aws_security_group.app: Destruction complete after 2s
+module.app_servers["logs"].aws_instance.this: Still destroying... [id=i-0c3d88ebddf565918, 00m50s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 00m50s elapsed]
+module.app_servers["logs"].aws_instance.this: Still destroying... [id=i-0c3d88ebddf565918, 01m00s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 01m00s elapsed]
+module.app_servers["logs"].aws_instance.this: Destruction complete after 1m5s
+module.app_servers["logs"].aws_security_group.app: Destroying... [id=sg-0830624e1628440e3]
+module.app_servers["logs"].aws_security_group.app: Destruction complete after 2s
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 01m10s elapsed]
+module.app_servers["api"].aws_instance.this: Still destroying... [id=i-045a049029c66c3ce, 01m20s elapsed]
+module.app_servers["api"].aws_instance.this: Destruction complete after 1m26s
+module.app_servers["api"].aws_security_group.app: Destroying... [id=sg-098241611d5e46a6a]
+module.app_servers["api"].aws_security_group.app: Destruction complete after 2s
+
+Destroy complete! Resources: 6 destroyed.
+daniel@daniel-Lenovo-ThinkBook-14-IIL:~/Moringa/kijanikiosk-devops-foundation/week-4/Independent-Project/version2/terraform$ 
